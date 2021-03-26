@@ -1,32 +1,48 @@
 import React, { useState, useRef, useEffect } from "react";
 import classes from "./App.module.css";
 import Task from "../../Components/Task";
-import axios from "../../todo-firabase";
+import axios from "../../axios-firabase";
 
 function App() {
 	/*State*/
 	const [tasks, setTasks] = useState([]);
 	const [input, setInput] = useState("");
+
 	/*ref*/
 	const inputRef = useRef(null);
+
 	/*useEffect*/
 	useEffect(() => {
-		inputRef.current.focus();
 		fetchDB();
-	}, [tasks]);
+	}, []);
 
 	/*Fonctions*/
+
 	/*Recuperation de la base de données*/
 	const fetchDB = () => {
+		inputRef.current.focus();
 		axios
 			.get("/tasks.json")
 			.then((res) => {
 				const tasksFetch = [];
 				for (let id in res.data) tasksFetch.push({ ...res.data[id], id });
-				tasksFetch.sort((a, b) => a.done - b.done);
+				tasksFetch.sort((a, b) => a.done - b.done); //tri du tableau
 				setTasks(tasksFetch);
 			})
 			.catch((error) => console.log(error));
+	};
+
+	/*Ajout d'une tache*/
+	const addTask = (e) => {
+		e.preventDefault();
+		//setTasks([...tasks, { content: input, done: false }]);
+		const newTask = {
+			content: input,
+			done: false,
+		};
+
+		axios.post("/tasks.json", newTask).then(()=>fetchDB()); //update tasks
+		setInput("");
 	};
 
 	/*Suppression d'une tache*/
@@ -35,7 +51,7 @@ function App() {
 
 		axios
 			.delete("/tasks/" + copy[index].id + ".json")
-			.then(fetchDB())
+			.then(()=>fetchDB())
 			.catch((error) => console.log(error));
 	};
 
@@ -46,23 +62,14 @@ function App() {
 
 		axios
 			.put("/tasks/" + copy[index].id + ".json", copy[index])
-			.then((res) => fetchDB())
+			.then(() => fetchDB())
 			.catch((error) => console.log(error));
 	};
-	/*Ajout d'une tache*/
-	const addTask = (e) => {
-		e.preventDefault();
-		//setTasks([...tasks, { content: input, done: false }]);
-		const newTask = {
-			content: input,
-			done: false,
-		};
 
-		axios.post("/tasks.json", newTask).then(fetchDB()); //update tasks
-		setInput("");
-	};
 	/*Gestion de l'input*/
 	const inputHandler = (e) => setInput(e.target.value);
+
+	/*JSX*/
 
 	return (
 		<div className={classes.App}>
