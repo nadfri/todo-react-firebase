@@ -23,6 +23,11 @@
 
 }
 
+.cross{
+	width:30px;
+	height: 30px;
+}
+
 .cross:hover{
 	stroke: red;
 }
@@ -33,5 +38,5 @@ svg {
 }
 
 svg:hover{
-	transform: scale(1.5);
+	transform: scale(1.8);
 }

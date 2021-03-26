@@ -40,7 +40,7 @@ function App() {
 	};
 
 	/*Ajout d'une tache*/
-	const addTask = (e) => {
+	const addTask = e => {
 		e.preventDefault();
 		setTasks([...tasks, { content: input, done: false }]);
 		const newTask = {
@@ -57,11 +57,12 @@ function App() {
 	/*Suppression d'une tache*/
 	const removeHandler = (index) => {
 		const copy = [...tasks];
+		const idToDelete = copy[index].id;
 		copy.splice(index,1);
 		setTasks(copy);
 
 		axios
-			.delete("/tasks/" + tasks[index].id + ".json")
+			.delete("/tasks/" + idToDelete + ".json")
 			.catch((error) => console.log(error));
 	};
 
@@ -78,7 +79,7 @@ function App() {
 	};
 
 	/*Gestion de l'input*/
-	const inputHandler = (e) => setInput(e.target.value);
+	const inputHandler = e => setInput(e.target.value);
 
 	/*JSX*/
 
@@ -88,15 +89,15 @@ function App() {
 				<span>Ma Todo onLine</span>
 			</header>
 
-			{loading ? <Spinner /> : null}
+			{loading && <Spinner />}
 
 			<div className={classes.add}>
-				<form onSubmit={(e) => addTask(e)}>
+				<form onSubmit={addTask}>
 					<input
 						type="text"
 						placeholder="Que souhaitez-vous ajouter ?"
 						value={input}
-						onChange={(e) => inputHandler(e)}
+						onChange={inputHandler}
 						required
 						ref={inputRef}
 					/>
