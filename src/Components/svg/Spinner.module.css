@@ -1,0 +1,16 @@
+.spinner{
+    position: absolute;
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    backdrop-filter: blur(10px) grayscale(0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner svg{
+    width:300px;
+}
+
