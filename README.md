@@ -1,3 +1,4 @@
+Todo List faite en `REACT` avec base de donnée `FireBase`
 
 Pour pouvoir installer ce projet sur votre ordinateur, commencez par taper les commandes suivantes :
 
@@ -10,4 +11,4 @@ Elle vous permettra d'installer toutes les dépendances nécessaires au bon fonc
 Cette commande lancera votre serveur de développement. Vous pourrez ainsi travailler sur votre projet en allant sur : [http://localhost:3000](http://localhost:3000).
 
 ### `Lien de l'app`
-
+[https://todo-firebase.netlify.app](https://todo-firebase.netlify.app/)
